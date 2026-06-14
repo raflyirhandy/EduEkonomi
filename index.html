@@ -22,7 +22,10 @@
       --radius-md: 14px;
       --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    
+    /* FIX: overflow-wrap biar teks/link panjang gak bikin layar scroll ke samping */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; overflow-wrap: break-word; }
+    
     body { background: var(--bg-color); background-image: var(--bg-gradient); color: var(--text-main); overflow: hidden; height: 100vh; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
@@ -34,68 +37,15 @@
     @keyframes modalScaleUp { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
     @keyframes countUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     @keyframes pulse-shake { 0% { transform: scale(1) rotate(0); } 50% { transform: scale(1.05) rotate(-2deg); } 100% { transform: scale(1.05) rotate(2deg); } }
+    
     /* ===== HOME SECTION ===== */
-    #home { 
-      height: 100vh; 
-      overflow-y: auto; 
-      scroll-behavior: smooth; 
-      display: flex; 
-      flex-direction: column; 
-      position: relative;
-    }
-    /* CANVAS GRAFIK EKONOMI (BACKGROUND UTAMA) */
-    #economy-canvas-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      display: block;
-    }
-    /* LAYER KOIN BERPUTAR & EMOJI (DI ATAS CANVAS, DI BAWAH KONTEN) */
-    .coin-bg-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .rotating-coin {
-      position: absolute;
-      font-size: 2.2rem;
-      opacity: 0.25;
-      animation: spin-coin 8s infinite linear;
-      user-select: none;
-    }
-    .floating-emoji {
-      position: absolute;
-      font-size: 2rem;
-      opacity: 0.2;
-      animation: float-icon 14s infinite ease-in-out;
-    }
-    /* Overlay gradien agar konten terbaca */
-    #home::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(246,240,232,0.6), rgba(232,221,208,0.6), rgba(200,220,180,0.5));
-      z-index: 2;
-      pointer-events: none;
-    }
-    /* Semua konten asli di atas */
-    #home > * {
-      position: relative;
-      z-index: 3;
-    }
-    /* ===== KONTEN ASLI (TIDAK DIUBAH) ===== */
+    #home { height: 100vh; overflow-y: auto; scroll-behavior: smooth; display: flex; flex-direction: column; position: relative; }
+    #economy-canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
+    .coin-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
+    .rotating-coin { position: absolute; font-size: 2.2rem; opacity: 0.25; animation: spin-coin 8s infinite linear; user-select: none; }
+    .floating-emoji { position: absolute; font-size: 2rem; opacity: 0.2; animation: float-icon 14s infinite ease-in-out; }
+    #home::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(246,240,232,0.6), rgba(232,221,208,0.6), rgba(200,220,180,0.5)); z-index: 2; pointer-events: none; }
+    #home > * { position: relative; z-index: 3; }
     .blob-bg-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 0; }
     .blob-bg { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.13; animation: float-blob 28s infinite alternate; }
     .blob-1 { width: 480px; height: 480px; background: var(--accent-color); top: -60px; left: -110px; }
@@ -136,6 +86,7 @@
     .card-actions button { padding: 12px; border-radius: var(--radius-md); background: rgba(255,255,255,0.7); border: 1px solid rgba(61,90,62,0.18); cursor: pointer; transition: var(--transition); }
     .btn-quiz { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important; color: white !important; }
     .footer { text-align: center; padding: 40px 20px; font-size: 13px; color: var(--text-muted); background: rgba(246,240,232,0.6); position: relative; z-index: 2; }
+    
     /* ===== DASHBOARD ===== */
     #dashboard { height: 100vh; width: 100%; background: linear-gradient(135deg, #f5efe6, #e4dbd0); display: none; position: relative; overflow: hidden; }
     .dashboard-bg-animation { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
@@ -156,6 +107,7 @@
     .main-placeholder-icon { font-size: 60px; margin-bottom: 18px; animation: float-icon 4s infinite; }
     .quick-link { display: inline-block; padding: 9px 18px; background: rgba(61,90,62,0.08); border-radius: 20px; font-size: 12.5px; color: var(--primary-color); font-weight: 600; cursor: pointer; margin: 5px; transition: var(--transition); }
     .quick-link:hover { background: var(--primary-color); color: white; }
+    
     /* ===== MODAL & FLIPBOOK ===== */
     .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30,45,30,0.45); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
     .modal-content { background: rgba(255,255,255,0.97); width: 90%; max-width: 680px; max-height: 92vh; overflow-y: auto; padding: 36px; border-radius: var(--radius-xl); position: relative; animation: modalScaleUp 0.4s; }
@@ -171,7 +123,7 @@
     .fb-side-prev { left: 10px; }
     .fb-side-next { right: 10px; }
     .fb-page-number { position: absolute; bottom: -30px; left: 0; right: 0; text-align: center; font-size: 12px; background: rgba(0,0,0,0.5); color: white; width: fit-content; margin: 0 auto; padding: 4px 16px; border-radius: 20px; }
-    @media (max-width: 768px) { .fb-pages-area { grid-template-columns: 1fr !important; } .fb-side-next, .fb-side-prev { top: 40%; } }
+    
     /* ===== KUIS ===== */
     .game-screen { display: flex; flex-direction: column; align-items: center; }
     .rules-card { background: rgba(61,90,62,0.05); border-radius: var(--radius-md); padding: 20px; margin: 18px 0; text-align: left; width: 100%; max-width: 500px; }
@@ -214,6 +166,7 @@
     .result-actions-grid .result-btn:hover { transform: translateY(-2px); opacity: 0.9; }
     .correct-ans { background: #d4edda !important; border-color: #28a745 !important; }
     .incorrect-ans { background: #f8d7da !important; border-color: #dc3545 !important; }
+    
     /* ===== CAPAIAN & TUJUAN ===== */
     .cp-header, .tp-header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 28px; border-radius: var(--radius-lg); margin-bottom: 24px; position: relative; overflow: hidden; }
     .cp-header::after { content: '📋'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 60px; opacity: 0.2; }
@@ -240,6 +193,7 @@
     .tp-tag { font-size: 10px; color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
     .tp-card h4 { font-size: 14px; color: var(--primary-color); font-weight: 700; margin-bottom: 6px; }
     .tp-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+    
     .profil-wrapper { text-align: center; }
     .profil-avatar-ring { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 55px; }
     .profil-name { font-family: 'Cinzel', serif; font-size: 26px; color: var(--primary-color); margin-bottom: 6px; }
@@ -257,6 +211,10 @@
     .profil-daftar-pustaka ul li { margin-bottom: 8px; position: relative; padding-left: 4px; }
     .profil-daftar-pustaka ul li::before { content: "•"; color: var(--accent-color); font-weight: bold; display: inline-block; width: 18px; margin-left: -14px; }
 
+    /* ========================================================= */
+    /* ========== RESPONSIVE MOBILE FIXES (REVISI) ============= */
+    /* ========================================================= */
+    
     @media (max-width: 900px) {
       .hero-container { flex-direction: column; text-align: center; gap: 30px; }
       .hero-content { align-items: center; text-align: center; }
@@ -266,6 +224,44 @@
       .features-grid { grid-template-columns: 1fr; }
       .cp-grid { grid-template-columns: 1fr; }
       .profil-info-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      /* Benerin Ukuran Teks Utama */
+      .hero-content h1 { font-size: 42px; }
+      .section-title { font-size: 30px; }
+
+      /* FIX: Benerin Dashboard & Sidebar biar numpuk ke bawah */
+      #dashboard { flex-direction: column; height: 100vh; overflow: hidden; }
+      .sidebar { width: 100%; height: auto; max-height: 45vh; padding: 20px 15px; border-bottom: 2px solid rgba(255,255,255,0.1); }
+      .dashboard-main { padding: 15px; flex-grow: 1; overflow-y: auto; align-items: flex-start; }
+      .main-placeholder-card { padding: 25px 15px; width: 100%; margin-top: 10px; }
+
+      /* Benerin Modal (Kotak Putih Utama) */
+      .modal-content { width: 95%; max-height: 92vh; padding: 25px 15px; margin: 10px auto; }
+      .close { top: 10px; right: 10px; width: 32px; height: 32px; font-size: 16px; background: rgba(0,0,0,0.08); }
+      
+      /* Benerin Modal Flipbook */
+      .modal-content.materi-flipbook-modal { width: 100%; height: 100vh; max-height: 100vh; margin: 0; border-radius: 0; }
+      .fb-pages-area { grid-template-columns: 1fr !important; border-radius: 0; }
+      
+      /* FIX: Kasih padding lebar di kiri kanan biar teks gak nutupin panah (Sesuai Gambar 2) */
+      .fb-page-sheet { padding: 25px 50px 40px 50px; font-size: 13.5px; }
+      .fb-side-next, .fb-side-prev { top: 50%; transform: translateY(-50%); padding: 12px 14px; background: rgba(61,90,62,0.95); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+      .fb-side-prev { left: 5px; }
+      .fb-side-next { right: 5px; }
+      
+      /* FIX: Benerin Tabel di dalam materi biar bisa di-scroll ke samping */
+      table { display: block; width: 100%; overflow-x: auto; white-space: nowrap; font-size: 12px; }
+
+      /* Benerin Layout Kuis & Result */
+      .question-card { padding: 18px 15px; }
+      .option-btn { font-size: 13px; padding: 10px 12px; }
+      .result-score-big { font-size: 60px; }
+      .result-cw-row { flex-direction: column; gap: 10px; }
+      .result-ring-row { gap: 15px; }
+      .ring-svg { width: 70px; height: 70px; }
+      #result-percent-big { font-size: 26px; }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
